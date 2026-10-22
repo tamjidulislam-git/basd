@@ -1,1 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>Member Verification | Tamjidul Islam | BAST</title>
+
+    <meta name="description"
+          content="View the membership information and verification status of Tamjidul Islam at the Bangladesh Association of Student Developers (BAST).">
+
+    <meta name="theme-color" content="#080808">
+
+    <style>
+        :root {
+            --bg: #080808;
+            --card: #101010;
+            --card-light: #171717;
+            --red: #ed1c35;
+            --white: #f8f8f8;
+            --muted: #999;
+            --border: rgba(255,255,255,.10);
+            --green: #35d58a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--white);
+            font-family: Inter, "Segoe UI", Arial, sans-serif;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        .top-line {
+            height: 3px;
+            background: linear-gradient(
+                90deg,
+                #ed1c35 0%,
+                #ed1c35 35%,
+                #ffffff 35%,
+                #ffffff 65%,
+                #ed1c35 65%
+            );
+        }
+
+        .container {
+            width: min(100% - 32px, 960px);
+            margin: auto;
+        }
+
+        header {
+            border-bottom: 1px solid var(--border);
+            background: rgba(8,8,8,.95);
+        }
+
+        .header-inner {
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand-mark {
+            font-size: 37px;
+            font-weight: 950;
+            letter-spacing: -3px;
+            line-height: 1;
+        }
+
+        .brand-mark .a {
+            color: var(--red);
+        }
+
+        .brand-text {
+            font-size: 12px;
+            color: #c9c9c9;
+            line-height: 1.4;
+            letter-spacing: .5px;
+            margin-top: 5px;
+        }
+
+        .code-icon {
+            font-size: 27px;
+            font-weight: 800;
+            letter-spacing: -3px;
+        }
+
+        .header-label {
+            color: var(--muted);
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-align: right;
+        }
+
+        main {
+            padding: 52px 0 70px;
+        }
+
+        .eyebrow {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            color: #b9b9b9;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 14px;
+        }
+
+        .eyebrow::before {
+            content: "";
+            width: 24px;
+            height: 2px;
+            background: var(--red);
+        }
+
+        h1 {
+            font-size: clamp(32px, 6vw, 54px);
+            letter-spacing: -1.8px;
+            line-height: 1.12;
+            margin-bottom: 16px;
+        }
+
+        h1 span {
+            color: var(--red);
+        }
+
+        .intro {
+            color: #aaa;
+            max-width: 590px;
+            font-size: 14px;
+            margin-bottom: 32px;
+        }
+
+        .verification-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 25px 80px rgba(0,0,0,.35);
+        }
+
+        .card-top {
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            border-bottom: 1px solid var(--border);
+            background:
+                radial-gradient(
+                    ellipse at top left,
+                    rgba(237,28,53,.10),
+                    transparent 60%
+                ),
+                #111;
+        }
+
+        .card-label {
+            font-size: 11px;
+            letter-spacing: 1.8px;
+            color: #aaa;
+            text-transform: uppercase;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border: 1px solid rgba(237,28,53,.35);
+            background: rgba(237,28,53,.08);
+            border-radius: 100px;
+            color: #ff9aa7;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: .5px;
+            white-space: nowrap;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--red);
+            box-shadow: 0 0 10px rgba(237,28,53,.6);
+        }
+
+        .profile {
+            padding: 30px 28px;
+            display: grid;
+            grid-template-columns: 140px 1fr;
+            gap: 28px;
+            align-items: start;
+        }
+
+        .avatar {
+            width: 140px;
+            aspect-ratio: 1;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            outline: 4px solid var(--red);
+            outline-offset: 3px;
+            overflow: hidden;
+            background: #080808;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 5px 0 0 5px;
+        }
+
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .avatar-placeholder {
+            font-size: 44px;
+            font-weight: 800;
+            color: var(--red);
+        }
+
+        .name {
+            font-size: clamp(25px, 4vw, 35px);
+            line-height: 1.2;
+            letter-spacing: -.7px;
+            overflow-wrap: anywhere;
+            margin-bottom: 8px;
+        }
+
+        .role {
+            color: #ccc;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .role strong {
+            color: var(--white);
+        }
+
+        .verified-line {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            color: #bbb;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .shield {
+            flex: 0 0 22px;
+            width: 22px;
+            height: 25px;
+            border: 1px solid var(--red);
+            color: var(--red);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            clip-path: polygon(
+                50% 0, 95% 17%, 90% 65%,
+                50% 100%, 10% 65%, 5% 17%
+            );
+        }
+
+        .details {
+            margin: 0 28px;
+            border-top: 1px solid var(--border);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .detail {
+            padding: 20px 16px 20px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .detail:nth-child(odd) {
+            margin-right: 20px;
+        }
+
+        .detail-label {
+            font-size: 10px;
+            color: #858585;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 6px;
+        }
+
+        .detail-value {
+            font-size: 13px;
+            color: #f1f1f1;
+            overflow-wrap: anywhere;
+        }
+
+        .organization {
+            margin: 24px 28px 28px;
+            padding: 20px;
+            background: var(--card-light);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--red);
+            border-radius: 5px;
+        }
+
+        .organization-label {
+            color: #888;
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .organization-name {
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.5;
+        }
+
+        .organization-abbr {
+            color: var(--red);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            margin-top: 5px;
+        }
+
+        .notice {
+            margin-top: 22px;
+            padding: 18px 20px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: #999;
+            font-size: 12px;
+        }
+
+        .notice strong {
+            display: block;
+            color: #eee;
+            font-size: 13px;
+            margin-bottom: 5px;
+        }
+
+        .notice p {
+            line-height: 1.8;
+        }
+
+        .footer {
+            padding: 25px 0;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .footer-brand {
+            font-weight: 900;
+            letter-spacing: -1px;
+            font-size: 21px;
+        }
+
+        .footer-brand span {
+            color: var(--red);
+        }
+
+        .footer-text {
+            color: #777;
+            font-size: 11px;
+        }
+
+        .footer-url {
+            color: #aaa;
+            font-size: 11px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: min(100% - 24px, 960px);
+            }
+
+            .header-inner {
+                min-height: 82px;
+            }
+
+            .brand-mark {
+                font-size: 31px;
+            }
+
+            .brand-text {
+                font-size: 10px;
+            }
+
+            .code-icon {
+                font-size: 22px;
+            }
+
+            .header-label {
+                font-size: 9px;
+                letter-spacing: 1px;
+            }
+
+            main {
+                padding: 35px 0 45px;
+            }
+
+            .card-top {
+                padding: 18px;
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .profile {
+                padding: 25px 20px;
+                grid-template-columns: 1fr;
+                gap: 23px;
+            }
+
+            .avatar {
+                width: 112px;
+            }
+
+            .details {
+                margin: 0 20px;
+                grid-template-columns: 1fr;
+            }
+
+            .detail {
+                padding: 15px 0;
+            }
+
+            .detail:nth-child(odd) {
+                margin-right: 0;
+            }
+
+            .organization {
+                margin: 22px 20px;
+                padding: 17px;
+            }
+
+            .footer-inner {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+
+        @media print {
+            body {
+                background: #fff;
+                color: #111;
+            }
+
+            header, .footer, .notice {
+                display: none;
+            }
+
+            main {
+                padding: 20px 0;
+            }
+
+            .verification-card {
+                box-shadow: none;
+                border: 1px solid #ccc;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="top-line"></div>
+
+    <header>
+        <div class="container header-inner">
+
+            <a class="brand" href="#home" aria-label="BAST home">
+                <div>
+                    <div class="brand-mark">
+                        B<span class="a">A</span>SD
+                    </div>
+                    <div class="brand-text">
+                        Bangladesh Association<br>
+                        of Student Developers
+                    </div>
+                </div>
+
+                <div class="code-icon" aria-hidden="true">&lt;/&gt;</div>
+            </a>
+
+            <div class="header-label">
+                Membership<br>Information
+            </div>
+
+        </div>
+    </header>
+
+    <main id="home">
+        <div class="container">
+
+            <div class="eyebrow">BAST Member Directory</div>
+
+            <h1>Member <span>Verification.</span></h1>
+
+            <p class="intro">
+                View the membership information associated with this
+                identification card. Check the member's identity,
+                designated role and organization details below.
+            </p>
+
+            <section class="verification-card"
+                     aria-label="Member information">
+
+                <div class="card-top">
+                    <div class="card-label">
+                        Official Member Profile
+                    </div>
+
+                    <div class="status" id="verificationStatus">
+                        <span class="status-dot"></span>
+                        <span id="statusText">STATUS TO BE CONFIRMED</span>
+                    </div>
+                </div>
+
+                <div class="profile">
+
+                    <div class="avatar" id="avatar">
+                        <div class="avatar-placeholder">TI</div>
+                    </div>
+
+                    <div>
+                        <h2 class="name">Tamjidul Islam</h2>
+
+                        <p class="role">
+                            <strong>Executive Member</strong>
+                        </p>
+
+                        <div class="verified-line">
+                            <span class="shield">✓</span>
+                            <span>
+                                Membership information for the
+                                Bangladesh Association of Student
+                                Developers.
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="details">
+
+                    <div class="detail">
+                        <div class="detail-label">Member Name</div>
+                        <div class="detail-value">Tamjidul Islam</div>
+                    </div>
+
+                    <div class="detail">
+                        <div class="detail-label">Designation</div>
+                        <div class="detail-value">Executive Member</div>
+                    </div>
+
+                    <div class="detail">
+                        <div class="detail-label">Organization</div>
+                        <div class="detail-value">BAST</div>
+                    </div>
+
+                    <div class="detail">
+                        <div class="detail-label">Verification Reference</div>
+                        <div class="detail-value">BAST-TI-001</div>
+                    </div>
+
+                    <div class="detail">
+                        <div class="detail-label">Verification Method</div>
+                        <div class="detail-value">
+                            QR-linked member profile
+                        </div>
+                    </div>
+
+                    <div class="detail">
+                        <div class="detail-label">Profile Status</div>
+                        <div class="detail-value" id="profileStatus">
+                            Pending official confirmation
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="organization">
+                    <div class="organization-label">
+                        Organization
+                    </div>
+
+                    <div class="organization-name">
+                        Bangladesh Association of Student Developers
+                    </div>
+
+                    <div class="organization-abbr">BAST</div>
+                </div>
+
+            </section>
+
+            <div class="notice">
+                <strong>About this verification page</strong>
+                <p>
+                    This page displays member information associated
+                    with the QR code. A QR code or a website displaying
+                    membership details does not independently prove
+                    membership. Official verification requires confirmation
+                    from an authorized BAST representative or an
+                    authenticated membership record.
+                </p>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-inner">
+
+            <div>
+                <div class="footer-brand">
+                    B<span>A</span>SD
+                </div>
+
+                <div class="footer-text">
+                    Bangladesh Association of Student Developers
+                </div>
+            </div>
+
+            <div class="footer-url">
+                BAST.TamjidulIslam.com
+            </div>
+
+        </div>
+    </footer>
+
+    <script>
+        /*
+         * IMPORTANT:
+         * Keep verification pending until BAST confirms this member
+         * and the information is backed by an authorized record.
+         *
+         * This frontend setting is NOT secure verification.
+         * For genuine verification, use an authenticated backend
+         * or a signed/authorized membership record.
+         */
+
+        const member = {
+            name: "Tamjidul Islam",
+            designation: "Executive Member",
+            organization: "Bangladesh Association of Student Developers",
+            reference: "BAST-TI-001",
+
+            // Change to true ONLY after official confirmation.
+            // This switch alone does not prove authenticity.
+            officiallyConfirmed: false,
+
+            // Optional portrait path, e.g. "tamjidul-islam.jpg".
+            photo: ""
+        };
+
+        const statusText = document.getElementById("statusText");
+        const profileStatus = document.getElementById("profileStatus");
+        const avatar = document.getElementById("avatar");
+        const verificationStatus =
+            document.getElementById("verificationStatus");
+
+        if (member.officiallyConfirmed === true) {
+            statusText.textContent = "CONFIRMATION RECORDED";
+            profileStatus.textContent = "Official confirmation recorded";
+            verificationStatus.style.borderColor =
+                "rgba(53,213,138,.4)";
+            verificationStatus.style.background =
+                "rgba(53,213,138,.08)";
+            verificationStatus.style.color = "#75e6b1";
+
+            verificationStatus.querySelector(".status-dot")
+                .style.background = "#35d58a";
+        } else {
+            statusText.textContent = "PENDING CONFIRMATION";
+            profileStatus.textContent =
+                "Pending official confirmation";
+        }
+
+        if (member.photo) {
+            const image = document.createElement("img");
+            image.src = member.photo;
+            image.alt = member.name;
+            image.onerror = function () {
+                this.remove();
+                avatar.innerHTML =
+                    '<div class="avatar-placeholder">TI</div>';
+            };
+
+            avatar.innerHTML = "";
+            avatar.appendChild(image);
+        }
+
+        document.title =
+            "Member Verification | " + member.name + " | BAST";
+    </script>
+
+</body>
+  </html>
